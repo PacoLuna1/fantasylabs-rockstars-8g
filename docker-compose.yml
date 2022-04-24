@@ -1,0 +1,37 @@
+version: '3'
+services:
+  postgres_db:
+    image: postgres:14-alpine
+    container_name: "postgres10.1"
+    environment:
+      POSTGRES_PASSWORD: "123World000%"
+      POSTGRES_DB: "fantasylabsdb"
+      POSTGRES_USER: "francisco_luna"
+    ports:
+      - "10010:5510"
+    volumes:
+      - "/home/francisco_luna/postgres:/usr/src/postgres"
+    networks:
+      - our-library-net
+    command: -p 5510
+
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8010"
+    container_name: "django10.1"
+    environment:
+      PSQL_DBNAME: "fantasylabsdb"
+      PSQL_USERNAME: "francisco_luna"
+      PSQL_PASS: "123World000%"
+      PSQL_HOST: "postgres_db"
+      PSQL_PORT: "5510"
+    volumes:
+      - "/home/francisco_luna/fantasylabs:/usr/src/django/fantasylabs"
+    ports:
+      - "9010:8010"
+    networks:
+      - our-library-net
+networks:
+  our-library-net:
+    external: true
+    driver: bridge
