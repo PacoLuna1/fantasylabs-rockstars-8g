@@ -1,4 +1,6 @@
 from django.db import models
+from fantasylabs.genres.models import Genre
+from fantasylabs.singers.models import Singer
 
 # Create your models here.
 class Album(models.Model):
@@ -9,7 +11,6 @@ class Album(models.Model):
   image = models.BinaryField()
   genre = models.ForeignKey(Genre, on_delete=models.DO_NOTHING)
   singer = models.ManyToManyField(Singer, through='AlbumsSingers')
-  song = models.ManyToManyField(Song, through='SongsAlbums')
 
 class AlbumsSingers(models.Model):
 	album = models.ForeignKey(Album, related_name='AlbumWithSingers', on_delete=models.DO_NOTHING)

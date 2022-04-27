@@ -1,4 +1,6 @@
 from django.db import models
+from fantasylabs.singers.models import Singer
+from fantasylabs.albums.models import Album
 
 # Create your models here.
 class Song(models.Model):

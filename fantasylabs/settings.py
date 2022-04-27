@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'fantasylabs.users',
+    'fantasylabs.albums',
+    'fantasylabs.songs',
+    'fantasylabs.singers',
+    'fantasylabs.genres',
 ]
 
 MIDDLEWARE = [
