@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = "users.User" 
 
 # Application definition
 
@@ -37,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'rest_framework',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'fantasylabs.users',
     'fantasylabs.albums',
     'fantasylabs.songs',
@@ -91,6 +95,22 @@ DATABASES = {
 }
 
 
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+  'DEFAULT_PERMISSION_CLASSES': [
+    #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+  ],
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=int(env.get('JWT_TOKEN_TIME'))),
+  'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+  'ALGORITHM': 'HS256',
+  'AUTH_HEADER_TYPES': ('Bearer',),
+  'ROTATE_REFRESH_TOKENS' : False,
+  'BLACKLIST_AFTER_ROTATION': False
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
