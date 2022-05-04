@@ -16,10 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 urlpatterns = [
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+]
+
+urlpatterns += [
     path('admin/', admin.site.urls),
+    path('api_auth/', include('rest_framework.urls')),
+    path('users/', include('fantasylabs.users.urls')),
     path('singers/', include('fantasylabs.singers.urls')),
     path('genres/', include('fantasylabs.genres.urls')),
     path('albums/', include('fantasylabs.albums.urls')),
-    path('songs/', include('fantasylabs.songs.urls'))
+    path('songs/', include('fantasylabs.songs.urls')),
 ]
