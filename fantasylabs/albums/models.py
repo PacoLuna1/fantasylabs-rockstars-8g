@@ -8,7 +8,7 @@ class Album(models.Model):
   release_date = models.DateField()
   price = models.SmallIntegerField()
   stock = models.SmallIntegerField()
-  image = models.BinaryField()
+  image = models.TextField()
   genre = models.ForeignKey(Genre, on_delete=models.DO_NOTHING)
   singer = models.ManyToManyField(Singer, through='AlbumsSingers')
 
