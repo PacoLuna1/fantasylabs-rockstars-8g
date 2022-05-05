@@ -3,7 +3,8 @@ from rest_framework import routers
 from django.urls import path, include
 
 router = routers.DefaultRouter()
-router.register(r'album', views.AlbumViewSet)
+router.register(r'albumssinger', views.AlbumsSingersViewSet)
+router.register(r'', views.AlbumViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

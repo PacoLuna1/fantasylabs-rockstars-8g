@@ -6,4 +6,4 @@ class Singer(models.Model):
   name = models.CharField(max_length=128)
   last_name = models.CharField(max_length=128)
   nationality = models.CharField(max_length=128)
-  image = models.BinaryField()
+  image = models.TextField()

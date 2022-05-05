@@ -8,3 +8,8 @@ class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
     permission_classes = []
+
+class AlbumsSingersViewSet(viewsets.ModelViewSet):
+    queryset = AlbumsSingers.objects.all()
+    serializer_class = AlbumsSingersSerializer
+    permission_classes = []
