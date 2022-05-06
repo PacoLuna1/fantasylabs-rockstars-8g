@@ -32,6 +32,20 @@ services:
       - "90${PORT}:80${PORT}"
     networks:
       - our-library-net
+
+  front:
+    build:
+      dockerfile: Dockerfile
+      context: ./world
+    command: sh -c "yarn install && yarn run start"
+    container_name: "react${PORT}"
+    volumes:
+      - "${REACT_VOLUME_PATH}:/app"
+    ports:
+      - "110${PORT}:110${PORT}"
+    networks:
+      - our-library-net
+
 networks:
   our-library-net:
     external: true
