@@ -1,8 +1,14 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
+import labReducer from '../feature/labSlice'
+import loaderReducer from '../feature/loaderSlice'
+
+export const rootReducer = combineReducers({
+    lab: labReducer,
+    loader: loaderReducer
+});
 
 export const store = configureStore({
-  reducer: {
-  },
+  reducer: rootReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;

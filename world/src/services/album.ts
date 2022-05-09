@@ -1,18 +1,21 @@
 import { Album } from '../models/album'
 import { createAlbumDTO, deleteAlbumDTO, updateAlbumDTO } from '../views/admin/album/types'
+import { addAlbum, patchAlbum, removeAlbum, setAlbums } from '../feature/labSlice';
+import { AppDispatch } from '../app/store';
 
-export const getAlbums = async () =>{
+export const getAlbums = () => async (dispatch: AppDispatch) =>{
   try{
     const response = await fetch("http://3.218.67.164:9010/albums/");
     if(response.status !== 200) return;
 
     const albums: Album[] = await response.json();
+    dispatch(setAlbums(albums));
   }catch(err){
     throw err;
   }
 }
 
-export const createAlbum = async (albumDTO: createAlbumDTO) =>{
+export const createAlbum = (albumDTO: createAlbumDTO) => async (dispatch: AppDispatch) =>{
   try{
     const response = await fetch(`http://3.218.67.164:9010/albums/`,{
       method: "POST",
@@ -24,12 +27,13 @@ export const createAlbum = async (albumDTO: createAlbumDTO) =>{
     if(response.status !== 201) return;
 
     const album: Album = await response.json();
+    dispatch(addAlbum(album))
   }catch(err){
     throw err
   }
 }
 
-export const updateAlbum = async (albumDTO: updateAlbumDTO) =>{
+export const updateAlbum = (albumDTO: updateAlbumDTO) => async (dispatch: AppDispatch) =>{
   try{
     const response = await fetch(`http://3.218.67.164:9010/albums/${albumDTO._id}/`,{
       method: "PATCH",
@@ -41,12 +45,13 @@ export const updateAlbum = async (albumDTO: updateAlbumDTO) =>{
     if(response.status !== 200) return;
 
     const album: Album = await response.json();
+    dispatch(patchAlbum(album))
   }catch(err){
     throw err
   }
 }
 
-export const deleteAlbum = async (albumDTO: deleteAlbumDTO) =>{
+export const deleteAlbum = (albumDTO: deleteAlbumDTO) => async (dispatch: AppDispatch) =>{
   try{
     const response = await fetch(`http://3.218.67.164:9010/albums/${albumDTO._id}`,{
       method: "DELETE",
@@ -55,6 +60,7 @@ export const deleteAlbum = async (albumDTO: deleteAlbumDTO) =>{
       },
     });
     if(response.status !== 204) return;
+    dispatch(removeAlbum(albumDTO._id))
   }catch(err){
     throw err
   }
