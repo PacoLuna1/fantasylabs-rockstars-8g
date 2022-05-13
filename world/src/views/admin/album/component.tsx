@@ -19,7 +19,7 @@ export const Album:FC = ()=> {
       {albums !== undefined ? (
         <div>
           {albums.map((album, index) => (
-              <p key={`${album._id}-${index}`}>{album.name}</p>
+              <p key={`${album.id}-${index}`}>{album.name}</p>
           ))}
         </div>
       ): null}

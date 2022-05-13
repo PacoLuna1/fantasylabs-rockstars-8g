@@ -1,5 +1,5 @@
 import { Genre } from '../models/genre';
-import { createGenreDTO, deleteGenreDTO, updateGenreDTO } from '../views/admin/genre/types';
+import { CreateGenreDTO, DeleteGenreDTO, GenrePosition, UpdateGenreDTO } from '../views/admin/genre/types';
 import { addGenre, patchGenre, removeGenre, setGenres } from '../feature/labSlice';
 import { AppDispatch } from '../app/store';
 import { setLoading } from '../feature/loaderSlice';
@@ -19,7 +19,7 @@ export const getGenres = () => async (dispatch: AppDispatch) =>{
   }
 }
 
-export const createGenre = (genreDTO: createGenreDTO) => async (dispatch: AppDispatch) =>{
+export const createGenre = (genreDTO: CreateGenreDTO) => async (dispatch: AppDispatch) =>{
   try{
     const response = await fetch(`http://3.218.67.164:9010/genres/`,{
       method: "POST",
@@ -37,9 +37,9 @@ export const createGenre = (genreDTO: createGenreDTO) => async (dispatch: AppDis
   }
 }
 
-export const updateGenre = (genreDTO: updateGenreDTO) => async (dispatch: AppDispatch) =>{
+export const updateGenre = (genreDTO: UpdateGenreDTO, genrePosition: GenrePosition) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/genres/${genreDTO._id}/`,{
+    const response = await fetch(`http://3.218.67.164:9010/genres/${genrePosition.id}/`,{
       method: "PATCH",
       body: JSON.stringify(genreDTO),
       headers: {
@@ -49,23 +49,23 @@ export const updateGenre = (genreDTO: updateGenreDTO) => async (dispatch: AppDis
     if(response.status !== 200) return;
 
     const genre: Genre = await response.json();
-    dispatch(patchGenre(genre))
+    dispatch(patchGenre({genre, index: genrePosition.index}))
   }catch(err){
     throw err
   }
 }
 
 
-export const deleteGenre = (genreDTO: deleteGenreDTO) => async (dispatch: AppDispatch) =>{
+export const deleteGenre = (id: string, index: number) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/genres/${genreDTO._id}`,{
+    const response = await fetch(`http://3.218.67.164:9010/genres/${id}`,{
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
       },
     });
     if(response.status !== 204) return;
-    dispatch(removeGenre(genreDTO._id))
+    dispatch(removeGenre({id: id, index: index}))
   }catch(err){
     throw err
   }

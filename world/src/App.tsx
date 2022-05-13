@@ -5,6 +5,7 @@ import './App.css';
 import { Aside } from './components/aside/component';
 import { Navbar } from './components/navbar/component';
 import { Styles } from './theme/types';
+import { AdminGenre } from './views/admin/genre/component';
 import { HomePage } from './views/homepage/component';
 
 export const App:FC = ()=> {
@@ -21,6 +22,7 @@ export const App:FC = ()=> {
         <Aside />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/adminGenre" element={<AdminGenre />} />
         </Routes>
       </Box>
     </>

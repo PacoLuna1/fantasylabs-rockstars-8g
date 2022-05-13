@@ -19,7 +19,7 @@ export const Singer:FC = ()=> {
       {singers !== undefined ? (
         <div>
           {singers.map((singer, index) => (
-              <p key={`${singer._id}-${index}`}>{singer.stage_name}</p>
+              <p key={`${singer.id}-${index}`}>{singer.stage_name}</p>
           ))}
         </div>
       ): null}
