@@ -1,5 +1,5 @@
 import { Album } from '../models/album'
-import { AlbumPosition, CreateAlbumDTO, DeleteAlbumDTO, UpdateAlbumDTO } from '../views/admin/album/types'
+import { AlbumPosition, CreateAlbumDTO, UpdateAlbumDTO } from '../views/admin/album/types'
 import { addAlbum, patchAlbum, removeAlbum, setAlbums } from '../feature/labSlice';
 import { AppDispatch } from '../app/store';
 
@@ -51,16 +51,16 @@ export const updateAlbum = (albumDTO: UpdateAlbumDTO, albumPosition: AlbumPositi
   }
 }
 
-export const deleteAlbum = (albumDTO: DeleteAlbumDTO) => async (dispatch: AppDispatch) =>{
+export const deleteAlbum = (id: string, index: number) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/albums/${albumDTO.id}`,{
+    const response = await fetch(`http://3.218.67.164:9010/albums/${id}`,{
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
       },
     });
     if(response.status !== 204) return;
-    dispatch(removeAlbum(albumDTO.id))
+    dispatch(removeAlbum({id: id, index: index}))
   }catch(err){
     throw err
   }

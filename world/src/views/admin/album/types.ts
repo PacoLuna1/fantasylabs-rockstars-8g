@@ -7,22 +7,42 @@ export interface GetByIDAlbumDTO{
 
 export interface CreateAlbumDTO{
   name: string;
-  releaseDate: Date;
+  release_date: string;
   price: number;
   stock: number;
   image: string;
   genre: Genre;
-  singer: Singer;
+  singer: Singer[];
+}
+
+export interface CreateAlbumFormik{
+  name: string;
+  release_date: string;
+  price: number;
+  stock: number;
+  image: string;
+  genreID: string;
+  singerID: [string];
 }
 
 export interface UpdateAlbumDTO{
   name: string;
-  releaseDate: Date;
+  release_date: Date;
   price: number;
   stock: number;
   image: string;
   genre: Genre;
-  singer: Singer;
+  singer: Singer[];
+}
+
+export interface UpdateAlbumFormik{
+  name: string;
+  release_date: string;
+  price: number;
+  stock: number;
+  image: string;
+  genreID: string;
+  singerID: [string];
 }
 
 export interface DeleteAlbumDTO{
