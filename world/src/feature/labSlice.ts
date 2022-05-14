@@ -33,7 +33,7 @@ export const labSlice = createSlice({
       state.genres[action.payload.index] = action.payload.genre;
     },
     removeGenre: (state, action) => {
-      state.genres.splice(action.payload, 1);
+      state.genres.splice(action.payload.index, 1);
     },
     setSingers: (state, action) =>{
       state.singers = action.payload;
@@ -45,7 +45,7 @@ export const labSlice = createSlice({
       state.singers[action.payload.index] = action.payload.singer;
     },
     removeSinger: (state, action) => {
-      state.singers.splice(action.payload, 1);
+      state.singers.splice(action.payload.index, 1);
     },
     setSongs: (state, action) =>{
       state.songs = action.payload;
@@ -57,7 +57,7 @@ export const labSlice = createSlice({
       state.songs[action.payload.index] = action.payload.song;
     },
     removeSong: (state, action) => {
-      state.songs.splice(action.payload, 1);
+      state.songs.splice(action.payload.index, 1);
     },
     setAlbums: (state, action) =>{
       state.albums = action.payload;
@@ -69,7 +69,7 @@ export const labSlice = createSlice({
       state.albums[action.payload.index] = action.payload.album;
     },
     removeAlbum: (state, action) => {
-      state.albums.splice(action.payload, 1);
+      state.albums.splice(action.payload.index, 1);
     },
   }
 })

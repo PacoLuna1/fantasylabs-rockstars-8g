@@ -1,11 +1,11 @@
 import { Genre } from '../../../models/genre'
 import { Singer } from '../../../models/singer';
 
-export interface getByIDAlbumDTO{
-  _id: string;
+export interface GetByIDAlbumDTO{
+  id: string;
 }
 
-export interface createAlbumDTO{
+export interface CreateAlbumDTO{
   name: string;
   releaseDate: Date;
   price: number;
@@ -15,8 +15,7 @@ export interface createAlbumDTO{
   singer: Singer;
 }
 
-export interface updateAlbumDTO{
-  _id: string;
+export interface UpdateAlbumDTO{
   name: string;
   releaseDate: Date;
   price: number;
@@ -26,6 +25,11 @@ export interface updateAlbumDTO{
   singer: Singer;
 }
 
-export interface deleteAlbumDTO{
-  _id: string;
+export interface DeleteAlbumDTO{
+  id: string;
+}
+
+export interface AlbumPosition {
+  id: string;
+  index: number;
 }

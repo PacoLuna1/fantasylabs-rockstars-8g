@@ -1,5 +1,5 @@
 import { Singer } from '../models/singer'
-import { createSingerDTO, deleteSingerDTO, updateSingerDTO } from '../views/admin/singer/types'
+import { CreateSingerDTO, SingerPosition, UpdateSingerDTO } from '../views/admin/singer/types'
 import { setSingers, addSinger, patchSinger, removeSinger } from '../feature/labSlice';
 import { AppDispatch } from '../app/store';
 
@@ -15,7 +15,7 @@ export const getSingers = () => async (dispatch: AppDispatch) =>{
   }
 }
 
-export const createSinger = (singerDTO: createSingerDTO) => async (dispatch: AppDispatch)  =>{
+export const createSinger = (singerDTO: CreateSingerDTO) => async (dispatch: AppDispatch)  =>{
   try{
     const response = await fetch(`http://3.218.67.164:9010/singers/`,{
       method: "POST",
@@ -33,9 +33,9 @@ export const createSinger = (singerDTO: createSingerDTO) => async (dispatch: App
   }
 }
 
-export const updateSinger = (singerDTO: updateSingerDTO) => async (dispatch: AppDispatch) =>{
+export const updateSinger = (singerDTO: UpdateSingerDTO, singerPosition: SingerPosition) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/singers/${singerDTO._id}/`,{
+    const response = await fetch(`http://3.218.67.164:9010/singers/${singerPosition.id}/`,{
       method: "PATCH",
       body: JSON.stringify(singerDTO),
       headers: {
@@ -45,23 +45,25 @@ export const updateSinger = (singerDTO: updateSingerDTO) => async (dispatch: App
     if(response.status !== 200) return;
 
     const singer: Singer = await response.json();
-    dispatch(patchSinger(singer))
+    dispatch(patchSinger({singer, index: singerPosition.index}))
   }catch(err){
     throw err
   }
 }
 
 
-export const deleteSinger = (singerDTO: deleteSingerDTO) => async (dispatch: AppDispatch) =>{
+export const deleteSinger = (id: string, index: number) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/singers/${singerDTO._id}`,{
+    console.log(id)
+    console.log(index)
+    const response = await fetch(`http://3.218.67.164:9010/singers/${id}`,{
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
       },
     });
     if(response.status !== 204) return;
-    dispatch(removeSinger(singerDTO._id))
+    dispatch(removeSinger({id: id, index: index}))
   }catch(err){
     throw err
   }
