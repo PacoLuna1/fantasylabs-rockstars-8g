@@ -28,7 +28,7 @@ export const styles: Styles = {
   },
   formGroup: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
   },
   formContainer: {
     padding: "20px",

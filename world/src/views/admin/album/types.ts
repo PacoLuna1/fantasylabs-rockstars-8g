@@ -27,7 +27,7 @@ export interface CreateAlbumFormik{
 
 export interface UpdateAlbumDTO{
   name: string;
-  release_date: Date;
+  release_date: string;
   price: number;
   stock: number;
   image: string;

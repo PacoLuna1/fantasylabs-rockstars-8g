@@ -88,32 +88,45 @@ export const initialValuesUpdate: UpdateAlbumFormik = {
 };
 
 export const fillAddAlbum = (values: CreateAlbumFormik) => {
-  const album:CreateAlbumDTO = initialValues;
-   Object.keys(values).forEach(key => {
-     switch(key){
-      case "singerID":
-        album.singer = values[key].map((value: any)=>(JSON.parse(value)));
-        break;
-      case "genreID":
-        album.genre = JSON.parse(values[key])
-        break;
-      default:
-        // const hola = values[key as keyof CreateAlbumFormik];
-        console.log(album[key as keyof typeof album])
-        // const data = values[key as keyof typeof values];
-        // console.log(album[key as keyof typeof initialValues] = data);
-        // album[key as keyof CreateAlbumDTO] = values[key as keyof typeof initialValuesCreate];
-        break;
-     }
-  });
-  console.log("holaaaaaaa")
-  console.log(album)
-  // store.dispatch(createAlbum(values));
+  const albumData:CreateAlbumDTO = initialValues;
+  const album = fillAlbum(values, albumData);
+  store.dispatch(createAlbum(album));
 };
+
+export const fillAlbum = (values: CreateAlbumFormik, albumData: CreateAlbumDTO) =>{
+  Object.keys(values).forEach(key => {
+    switch(key){
+     case "singerID":
+      albumData.singer = values[key].map((value: any)=>(JSON.parse(value)));
+      break;
+     case "genreID":
+      albumData.genre = JSON.parse(values[key])
+      break;
+     case "name":
+      albumData.name = values[key]
+      break;
+     case "release_date":
+      albumData.release_date = values[key]
+      break;
+     case "price":
+      albumData.price = values[key]
+      break;
+     case "stock":
+      albumData.stock = values[key]
+      break;
+     case "image":
+      albumData.image = values[key]
+      break;
+    }
+ });
+ return albumData;
+}
 
 export const fillUpdateAlbum = (
   values: UpdateAlbumFormik,
   albumPosition: AlbumPosition
 ) => {
-  // store.dispatch(updateAlbum(values, albumPosition));
+  const albumData:CreateAlbumDTO = initialValues;
+  const album = fillAlbum(values, albumData);
+  store.dispatch(updateAlbum(album, albumPosition));
 };

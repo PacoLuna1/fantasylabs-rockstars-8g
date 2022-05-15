@@ -6,8 +6,7 @@ import {
   TableCell,
   TableRow,
   TextField,
-  Typography,
-  SelectChangeEvent
+  Typography
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -126,6 +125,7 @@ export const AdminAlbum:FC = () => {
                     <TextField
                       label="Fecha de lanzamiento"
                       error={Boolean(errors.release_date)}
+                      type="date"
                       name="release_date"
                       value={values.release_date}
                       onChange={handleChange}
@@ -202,6 +202,9 @@ export const AdminAlbum:FC = () => {
           </Box>
           {editIndex !== undefined && (
             <Box>
+              <Typography variant="h5" sx={styles.title}>
+                Actualizar un Album.
+              </Typography>
               <Formik
                 initialValues={initialValuesUpdate}
                 onSubmit={passToUpdate}
@@ -221,12 +224,10 @@ export const AdminAlbum:FC = () => {
                       <TextField
                         label="Fecha de lanzamiento"
                         error={Boolean(errors.release_date)}
-                        name="releaseDate"
+                        type="date"
+                        name="release_date"
                         value={values.release_date}
                         onChange={handleChange}
-                        type="date"
-                        defaultValue="2000-01-01"
-                        sx={{ width: 220 }}
                       />
                       <TextField
                         label="Precio"
@@ -254,30 +255,37 @@ export const AdminAlbum:FC = () => {
                         onChange={handleChange}
                         helperText={errors.image}
                       />
-                      {/* {genres !== undefined ? 
-                          <Select
+                      {genres !== undefined ? 
+                          <TextField
                             label="Genero"
-                            name="genre"
-                            value={`${values.genre ? values.genre : " " }`}
+                            name="genreID"
+                            select
+                            error={Boolean(errors.genreID)}
+                            value={values.genreID}
                             onChange={handleChange}
                           >
                           {genres?.map((genre, index)=>(
-                              <MenuItem key={`${genre.id}-${index}`} value={genre.id} id={genre.id}>{genre.description}</MenuItem>
+                            <MenuItem key={`${genre.id}-${index}`} value={JSON.stringify(genre)}>{genre.description}</MenuItem>
                           ))}
-                        </Select>
-                      : null} */}
-                      {/* {singers !== undefined ? 
+                        </TextField>
+                      : null}
+                      {errors.genreID && <div className="input-feedback">{errors.genreID}</div>}
+                      {singers !== undefined ? 
                         <Select
                           label="Cantante"
+                          name="singerID"
                           multiple
-                          value={values.singer ? values.singer : [" "]}
+                          error={Boolean(errors.singerID)}
+                          value={values.singerID}
                           onChange={handleChange}
                         >
+                          <MenuItem key={``} value={``}>Ninguno</MenuItem>
                           {singers?.map((singer, index)=>(
-                            <MenuItem key={`${singer.id}-${index}`} value={singer.id} id={singer.id}>{singer.name}</MenuItem>
+                            <MenuItem key={`${singer.id}-${index}`} value={JSON.stringify(singer)} id={singer.id}>{singer.name}</MenuItem>
                           ))}
                         </Select>
-                      : null} */}
+                      : null}
+                      {errors.singerID && <div className="input-feedback">{errors.singerID}</div>}
                       <Button
                         sx={styles.formButton}
                         variant="contained"
