@@ -1,8 +1,8 @@
-export interface getByIDSingerDTO{
-  _id: string;
+export interface GetByIDSingerDTO{
+  id: string;
 }
 
-export interface createSingerDTO{
+export interface CreateSingerDTO{
   stage_name: string;
   name: string;
   last_name: string;
@@ -10,8 +10,7 @@ export interface createSingerDTO{
   image: string;
 }
 
-export interface updateSingerDTO{
-  _id: string;
+export interface UpdateSingerDTO{
   stage_name: string;
   name: string;
   last_name: string;
@@ -19,6 +18,11 @@ export interface updateSingerDTO{
   image: string;
 }
 
-export interface deleteSingerDTO{
-  _id: string;
+export interface DeleteSingerDTO{
+  id: string;
+}
+
+export interface SingerPosition {
+  id: string;
+  index: number;
 }

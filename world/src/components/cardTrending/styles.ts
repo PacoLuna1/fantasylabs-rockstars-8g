@@ -2,34 +2,33 @@ import { Styles } from "../../theme/types";
 
 export const styles: Styles = {
   container:{
-    width: "75%",
+    width: "300px",
+    maxWidth: "300px",
     margin: "60px 0",
     padding: "20px",
     borderRadius: "40px",
-    maxWidth: "1200px",
     height: "350px"
   },
   title:{
     fontSize: "18px",
     fontWeight: "bold",
-    fontFamily: 'Georgia',
-    marginBottom: "20px",
+    fontFamily: 'Georgia'
   },
   carouselContainer:{
     display: "flex",
     gap: "40px",
     overflowX: "auto",
-    height: "80%",
     cursor: "grabbing"
   },
   smallCard:{
-    width: "186px",
+    width: "270px",
     boxShadow: "none",
+    height: "290px",
     overflow: "unset"
   },
   cardImage:{
     borderRadius: "10px",
-    width:"186px",
+    width:"270px",
     objectFit: "cover",
     height: "70%"
   },

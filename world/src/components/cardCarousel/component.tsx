@@ -35,7 +35,7 @@ export const CardCarousel:FC = () => {
                     {album.name}
                   </Typography>
                     {album.singer.map((singer,index)=>(
-                      <Typography sx={styles.infoSubtitle} key={`${singer._id}-${index}`}>{singer.name}</Typography>
+                      <Typography sx={styles.infoSubtitle} key={`${singer.id}-${index}`}>{singer.name}</Typography>
                     ))}
                   <Typography sx={styles.infoExtra} key={`${album.id}-${album.stock}`}>
                     <IconButton sx={styles.infoExtraIcon} >

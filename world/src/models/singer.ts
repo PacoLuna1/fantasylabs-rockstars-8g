@@ -1,5 +1,5 @@
 export interface Singer{
-  _id: string;
+  id: string;
   stage_name: string;
   name: string;
   last_name: string;

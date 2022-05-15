@@ -1,16 +1,20 @@
-export interface getByIDGenreDTO{
-  _id: string;
+export interface GetByIDGenreDTO{
+  id: string;
 }
 
-export interface createGenreDTO{
+export interface CreateGenreDTO{
   description: string;
 }
 
-export interface updateGenreDTO{
-  _id: string;
+export interface UpdateGenreDTO{
   description: string;
 }
 
-export interface deleteGenreDTO{
-  _id: string;
+export interface DeleteGenreDTO{
+  id: string;
+}
+
+export interface GenrePosition {
+  id: string;
+  index: number;
 }

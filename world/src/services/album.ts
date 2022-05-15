@@ -1,5 +1,5 @@
 import { Album } from '../models/album'
-import { createAlbumDTO, deleteAlbumDTO, updateAlbumDTO } from '../views/admin/album/types'
+import { AlbumPosition, CreateAlbumDTO, UpdateAlbumDTO } from '../views/admin/album/types'
 import { addAlbum, patchAlbum, removeAlbum, setAlbums } from '../feature/labSlice';
 import { AppDispatch } from '../app/store';
 
@@ -15,7 +15,7 @@ export const getAlbums = () => async (dispatch: AppDispatch) =>{
   }
 }
 
-export const createAlbum = (albumDTO: createAlbumDTO) => async (dispatch: AppDispatch) =>{
+export const createAlbum = (albumDTO: CreateAlbumDTO) => async (dispatch: AppDispatch) =>{
   try{
     const response = await fetch(`http://3.218.67.164:9010/albums/`,{
       method: "POST",
@@ -33,9 +33,9 @@ export const createAlbum = (albumDTO: createAlbumDTO) => async (dispatch: AppDis
   }
 }
 
-export const updateAlbum = (albumDTO: updateAlbumDTO) => async (dispatch: AppDispatch) =>{
+export const updateAlbum = (albumDTO: UpdateAlbumDTO, albumPosition: AlbumPosition) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/albums/${albumDTO._id}/`,{
+    const response = await fetch(`http://3.218.67.164:9010/albums/${albumPosition.id}/`,{
       method: "PATCH",
       body: JSON.stringify(albumDTO),
       headers: {
@@ -45,22 +45,22 @@ export const updateAlbum = (albumDTO: updateAlbumDTO) => async (dispatch: AppDis
     if(response.status !== 200) return;
 
     const album: Album = await response.json();
-    dispatch(patchAlbum(album))
+    dispatch(patchAlbum({album, index: albumPosition.index}))
   }catch(err){
     throw err
   }
 }
 
-export const deleteAlbum = (albumDTO: deleteAlbumDTO) => async (dispatch: AppDispatch) =>{
+export const deleteAlbum = (id: string, index: number) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/albums/${albumDTO._id}`,{
+    const response = await fetch(`http://3.218.67.164:9010/albums/${id}`,{
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
       },
     });
     if(response.status !== 204) return;
-    dispatch(removeAlbum(albumDTO._id))
+    dispatch(removeAlbum({id: id, index: index}))
   }catch(err){
     throw err
   }

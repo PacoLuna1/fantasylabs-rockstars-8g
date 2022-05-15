@@ -5,6 +5,9 @@ import './App.css';
 import { Aside } from './components/aside/component';
 import { Navbar } from './components/navbar/component';
 import { Styles } from './theme/types';
+import { AdminAlbum } from './views/admin/album/component';
+import { AdminGenre } from './views/admin/genre/component';
+import { AdminSinger } from './views/admin/singer/component';
 import { HomePage } from './views/homepage/component';
 
 export const App:FC = ()=> {
@@ -21,6 +24,9 @@ export const App:FC = ()=> {
         <Aside />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/adminGenre" element={<AdminGenre />} />
+          <Route path="/adminSinger" element={<AdminSinger />} />
+          <Route path="/adminAlbum" element={<AdminAlbum />} />
         </Routes>
       </Box>
     </>
