@@ -16,6 +16,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MusicNoteOutlinedIcon from '@mui/icons-material/MusicNoteOutlined';
 import AlbumOutlinedIcon from '@mui/icons-material/AlbumOutlined';
 import MicExternalOnIcon from '@mui/icons-material/MicExternalOn';
+import EmojiSymbolsIcon from '@mui/icons-material/EmojiSymbols';
 import { styles } from "./styles";
 import { useNavigate } from 'react-router-dom';
 
@@ -100,7 +101,7 @@ export const Aside =()=> {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Home', 'Albums', 'Singers', 'Songs' ].map((text, index) => (
+          {['Home', 'Albums', 'Singers', 'Songs', 'Genres' ].map((text, index) => (
             <ListItem key={text} onClick={() => changePage(text)} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -116,7 +117,7 @@ export const Aside =()=> {
                     justifyContent: 'center',
                   }}
                 >
-                  {[<HomeIcon />, <AlbumOutlinedIcon/> ,<MicExternalOnIcon />, <MusicNoteOutlinedIcon />][index]}
+                  {[<HomeIcon />, <AlbumOutlinedIcon/> ,<MicExternalOnIcon />, <MusicNoteOutlinedIcon />, <EmojiSymbolsIcon />][index]}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>

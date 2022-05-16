@@ -63,7 +63,12 @@ export const AdminSinger:FC = () => {
               <TableCell sx={styles.singerField}>{item.name}</TableCell>
               <TableCell sx={styles.singerField}>{item.last_name}</TableCell>
               <TableCell sx={styles.singerField}>{item.nationality}</TableCell>
-              <TableCell sx={styles.singerField}>{item.image}</TableCell>
+              <TableCell sx={styles.singerField}>
+                <Box
+                component="img"
+                src={`data:image/jpeg;base64,/9j/${item.image}`} 
+                sx={{width: "50px"}}/>
+              </TableCell>
               <TableCell sx={styles.singerActions}>
                 <Button
                   variant="contained"
