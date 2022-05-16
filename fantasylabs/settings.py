@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-l+pe1g2zon1vdo@ug8o_o7bpj^=+$gqxe#oi-2c6pfwf#jr)ef
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+AUTH_USER_MODEL = "users.User" 
 
 # Application definition
 
@@ -37,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
+    'drf_yasg',
     'rest_framework',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'fantasylabs.users',
     'fantasylabs.albums',
     'fantasylabs.songs',
@@ -48,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -91,6 +98,22 @@ DATABASES = {
 }
 
 
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+  'DEFAULT_PERMISSION_CLASSES': [
+    #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+  ],
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=int(env.get('JWT_TOKEN_TIME'))),
+  'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+  'ALGORITHM': 'HS256',
+  'AUTH_HEADER_TYPES': ('Bearer',),
+  'ROTATE_REFRESH_TOKENS' : False,
+  'BLACKLIST_AFTER_ROTATION': False
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
