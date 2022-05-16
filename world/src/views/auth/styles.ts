@@ -20,7 +20,7 @@ export const styles: Styles = {
   },
   title: {
     margin: "20px",
-    fontFamily: "'Cedarville Cursive', cursive",
+    fontFamily: "",
     fontWeight: "bold",
   },
   inputsContainer: {

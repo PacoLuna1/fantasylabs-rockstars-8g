@@ -1,4 +1,4 @@
-import { Box, Button, Paper, TextField } from "@mui/material";
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,9 @@ export const LoginAuth:FC = () => {
         {({ handleChange, handleSubmit, errors, values }) => (
           <form onSubmit={handleSubmit}>
             <Paper sx={styles.loginForm} elevation={6}>
+              <Typography variant="h2" sx={styles.title}>
+                Bienvenido
+              </Typography>
               <Box sx={styles.inputsContainer}>
                 <TextField
                   label="Username"

@@ -39,8 +39,12 @@ const TableCRUD = <T extends object>({
       padding: "24px",
       minWidth: "200px",
       width: "100%",
-      maxWidth: "1550px"
+      maxWidth: "1550px",
+      backgroundColor: "orange"
     },
+    head:{
+      backgroundColor: "white"
+    }
   };
 
   const tableStyles = useMemo(
@@ -55,7 +59,7 @@ const TableCRUD = <T extends object>({
     <Paper sx={tableStyles} elevation={6}>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead sx={styles.head}>
             <TableRow>
               <TableCell>
                 <Typography variant="h5">{title}</Typography>
