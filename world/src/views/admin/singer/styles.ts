@@ -2,7 +2,8 @@ import { Styles } from "../../../theme/types";
 
 export const styles: Styles = {
   fullSingerContainer:{
-    padding: "30px 0 0 50px"
+    padding: "30px 0 0 50px",
+    marginTop: "50px"
   },
   title: {
     fontWeight: "Bold",

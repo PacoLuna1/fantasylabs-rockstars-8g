@@ -2,7 +2,7 @@ import { Styles } from "../../theme/types";
 
 export const styles: Styles = {
   appbar:{
-    position:"static",
+    position:"fixed",
     backgroundColor: "#fff",
   },
   container:{

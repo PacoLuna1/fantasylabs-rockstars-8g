@@ -10,6 +10,7 @@ export const HomePage:FC = () => {
       padding: "10px 10px",
       width: "100%",
       maxWidth: "none",
+      marginTop: "100px"
     },
     title:{
       color: "#000"

@@ -8,6 +8,7 @@ export const styles: Styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: "200px"
   },
   loginForm: {
     display: "flex",
