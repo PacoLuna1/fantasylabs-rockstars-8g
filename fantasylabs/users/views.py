@@ -12,6 +12,7 @@ from rest_framework import status
 class LoginView(APIView):
   def post(self, request):
     email = request.data['email']
+    username = request.data['username']
     password = request.data['password']
 
     user = User.objects.filter(email=email).first()

@@ -1,5 +1,5 @@
 import { Song } from '../models/song'
-import { createSongDTO, deleteSongDTO, updateSongDTO } from '../views/admin/song/types'
+import { CreateSongDTO, SongPosition, UpdateSongDTO } from '../views/admin/song/types'
 import { addSong, patchSong, removeSong, setSongs } from '../feature/labSlice';
 import { AppDispatch } from '../app/store';
 
@@ -15,7 +15,7 @@ export const getSongs = () => async (dispatch: AppDispatch) =>{
   }
 }
 
-export const createSong = (songDTO: createSongDTO) => async (dispatch: AppDispatch) =>{
+export const createSong = (songDTO: CreateSongDTO) => async (dispatch: AppDispatch) =>{
   try{
     const response = await fetch(`http://3.218.67.164:9010/songs/`,{
       method: "POST",
@@ -24,7 +24,7 @@ export const createSong = (songDTO: createSongDTO) => async (dispatch: AppDispat
         'Content-Type': 'application/json',
       },
     });
-    if(response.status !== 201) return;
+    if(response.status !== 200) return;
 
     const song: Song = await response.json();
     dispatch(addSong(song))
@@ -33,9 +33,9 @@ export const createSong = (songDTO: createSongDTO) => async (dispatch: AppDispat
   }
 }
 
-export const updateSong = (songDTO: updateSongDTO) => async (dispatch: AppDispatch) =>{
+export const updateSong = (songDTO: UpdateSongDTO, songPosition: SongPosition) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/songs/${songDTO._id}/`,{
+    const response = await fetch(`http://3.218.67.164:9010/songs/${songPosition.id}/`,{
       method: "PATCH",
       body: JSON.stringify(songDTO),
       headers: {
@@ -45,22 +45,23 @@ export const updateSong = (songDTO: updateSongDTO) => async (dispatch: AppDispat
     if(response.status !== 200) return;
 
     const song: Song = await response.json();
-    dispatch(patchSong(song))
+    dispatch(patchSong({song, index: songPosition.index}))
   }catch(err){
     throw err
   }
 }
 
-export const deleteSong = (songDTO: deleteSongDTO) => async (dispatch: AppDispatch) =>{
+export const deleteSong = (id: string, index: number) => async (dispatch: AppDispatch) =>{
   try{
-    const response = await fetch(`http://3.218.67.164:9010/songs/${songDTO._id}`,{
+    const response = await fetch(`http://3.218.67.164:9010/songs/${id}`,{
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
       },
     });
     if(response.status !== 204) return;
-    dispatch(removeSong(songDTO._id))
+
+    dispatch(removeSong({id: id, index: index}))
   }catch(err){
     throw err
   }

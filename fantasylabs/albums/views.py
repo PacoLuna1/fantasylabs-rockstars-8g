@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions, status
 from fantasylabs.albums.serializers import *
 from fantasylabs.genres.models import Genre
 from fantasylabs.singers.models import Singer
@@ -25,18 +24,6 @@ class AlbumViewSet(viewsets.ModelViewSet):
       )
       genre.save()
       
-    if reqSinger['id'] is not None:
-      singer = Singer.objects.get(id=reqSinger['id'])
-    else:
-      singer = Singer.objects.create(
-        stage_name = reqSinger['stage_name'],
-        name = reqSinger['name'],
-        last_name = reqSinger['last_name'],
-        nationality = reqSinger['nationality'],
-        image = reqSinger['image']
-      )
-      singer.save()
-      
     album = Album.objects.create(
       name = album['name'],
       release_date = album['release_date'],
@@ -47,11 +34,15 @@ class AlbumViewSet(viewsets.ModelViewSet):
     )
     album.save()
     
-    albumsSingers = AlbumsSingers.objects.create(
-      singer = singer,
-      album = album
-    )
-    albumsSingers.save()
+    ids = [element['id'] for element in reqSinger]
+    for id in ids:
+      if not AlbumsSingers.objects.filter(album=album.id, singer=id):
+        singerAlbum = Singer.objects.get(id=id)
+        albumsSingers = AlbumsSingers.objects.create(
+          singer = singerAlbum,
+          album = album
+        )
+        albumsSingers.save()    
     
     serializer = AlbumSerializer(album)
 
@@ -95,6 +86,13 @@ class AlbumViewSet(viewsets.ModelViewSet):
     serializer = AlbumSerializer(album)
 
     return Response(serializer.data)
+  
+  def destroy(self, request, *args, **kwargs):
+    pk = kwargs['pk']
+    AlbumsSingers.objects.filter(album=pk).delete()
+    Album.objects.filter(id=pk).delete()
+    
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 class AlbumsSingersViewSet(viewsets.ModelViewSet):
     queryset = AlbumsSingers.objects.all()

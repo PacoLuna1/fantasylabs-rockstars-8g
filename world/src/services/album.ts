@@ -24,7 +24,8 @@ export const createAlbum = (albumDTO: CreateAlbumDTO) => async (dispatch: AppDis
         'Content-Type': 'application/json',
       },
     });
-    if(response.status !== 201) return;
+
+    if(response.status !== 200) return;
 
     const album: Album = await response.json();
     dispatch(addAlbum(album))

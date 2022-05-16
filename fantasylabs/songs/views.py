@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions, status
 from fantasylabs.songs.serializers import *
 from fantasylabs.albums.models import Album
 from fantasylabs.singers.models import Singer
@@ -17,32 +16,6 @@ class SongViewSet(viewsets.ModelViewSet):
     reqSinger = request.data.pop('singer')
     song = request.data
       
-    if reqSinger['id'] is not None:
-      singer = Singer.objects.get(id=reqSinger['id'])
-    else:
-      singer = Singer.objects.create(
-        stage_name = reqSinger['stage_name'],
-        name = reqSinger['name'],
-        last_name = reqSinger['last_name'],
-        nationality = reqSinger['nationality'],
-        image = reqSinger['image']
-      )
-      singer.save()
-      
-    if reqAlbum['id'] is not None:
-      album = Album.objects.get(id=reqAlbum['id'])
-    else:
-      album = Album.objects.create(
-        name = reqAlbum['name'],
-        release_date = reqAlbum['release_date'],
-        price = reqAlbum['price'],
-        stock = reqAlbum['stock'],
-        image = reqAlbum['image'],
-        genre = reqAlbum['genre'],
-        singer = reqAlbum['singer']
-      )
-      album.save()
-      
     song = Song.objects.create(
       name = song['name'],
       release_date = song['release_date'],
@@ -53,17 +26,27 @@ class SongViewSet(viewsets.ModelViewSet):
     )
     song.save()
     
-    songsSingers = SongsSingers.objects.create(
-      singer = singer,
-      song = song
-    )
-    songsSingers.save()
     
-    songsAlbums = SongsAlbums.objects.create(
-      album = album,
-      song = song
-    )
-    songsAlbums.save()
+    ids = [element['id'] for element in reqSinger]
+    ida = [element['id'] for element in reqAlbum]
+    
+    for id in ida:
+      if not SongsAlbums.objects.filter(song=song.id, album=id):
+        albumSong = Album.objects.get(id=id)
+        songsAlbums = SongsAlbums.objects.create(
+          album = albumSong,
+          song = song
+        )
+        songsAlbums.save()
+    
+    for id in ids:
+      if not SongsSingers.objects.filter(song=song.id, singer=id):
+        singerSong = Singer.objects.get(id=id)
+        songsSingers = SongsSingers.objects.create(
+          singer = singerSong,
+          song = song
+        )
+        songsSingers.save()
     
     serializer = SongSerializer(song)
 
@@ -107,14 +90,14 @@ class SongViewSet(viewsets.ModelViewSet):
         
     i = 0
     for songalbums in SongsAlbums.objects.filter(song=pk):
-      if songalbums.album.id not in ids:
+      if songalbums.album.id not in ida:
         SongsAlbums.objects.filter(
           album = songalbums.album.id,
           song = pk
         ).delete()
       i += 1
       
-    for id in ids:
+    for id in ida:
       if not SongsAlbums.objects.filter(song=pk, album=id):
         albumSong = Album.objects.get(id=id)
         songsAlbums = SongsAlbums.objects.create(
@@ -126,6 +109,14 @@ class SongViewSet(viewsets.ModelViewSet):
     serializer = SongSerializer(song)
 
     return Response(serializer.data)
+  
+  def destroy(self, request, *args, **kwargs):
+    pk = kwargs['pk']
+    SongsSingers.objects.filter(song=pk).delete()
+    SongsAlbums.objects.filter(song=pk).delete()
+    Song.objects.filter(id=pk).delete()
+    
+    return Response(status=status.HTTP_204_NO_CONTENT)
     
 class SongsAlbumsViewSet(viewsets.ModelViewSet):
     queryset = SongsAlbums.objects.all()

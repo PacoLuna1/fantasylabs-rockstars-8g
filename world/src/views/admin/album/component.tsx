@@ -6,8 +6,7 @@ import {
   TableCell,
   TableRow,
   TextField,
-  Typography,
-  SelectChangeEvent
+  Typography
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -26,7 +25,7 @@ import {
   fillUpdateAlbum,
 } from "./form";
 
-import { UpdateAlbumDTO, UpdateAlbumFormik } from "./types" 
+import { UpdateAlbumFormik } from "./types" 
 import { albumSelector, genreSelector, singerSelector } from "../../../feature/labSlice";
 import { AppDispatch } from "../../../app/store";
 import { getGenres } from "../../../services/genre";
@@ -56,11 +55,11 @@ export const AdminAlbum:FC = () => {
   };
 
   return (
-    <Box sx={styles.fullGenreContainer}>
+    <Box sx={styles.fullAlbumContainer}>
       <Typography variant="h2" sx={styles.title}>
         Administrador de albums.
       </Typography>{" "}
-      <Box sx={styles.genreContainer}>
+      <Box sx={styles.albumContainer}>
         <TableCRUD
           rowsPerPageOptions={[5, 10, 15]}
           data={albums}
@@ -68,22 +67,22 @@ export const AdminAlbum:FC = () => {
           title="Albums"
           row={(item, index) => (
             <TableRow key={`${item.id}-${index}`}>
-              <TableCell sx={styles.genreId}>{item.id}</TableCell>
-              <TableCell sx={styles.genreField}>{item.name}</TableCell>
-              <TableCell sx={styles.genreField}>{item.release_date?.toString()}</TableCell>
-              <TableCell sx={styles.genreField}>{item.price}</TableCell>
-              <TableCell sx={styles.genreField}>{item.stock}</TableCell>
-              <TableCell sx={styles.genreField}>
+              <TableCell sx={styles.albumId}>{item.id}</TableCell>
+              <TableCell sx={styles.albumField}>{item.name}</TableCell>
+              <TableCell sx={styles.albumField}>{item.release_date?.toString()}</TableCell>
+              <TableCell sx={styles.albumField}>{item.price}</TableCell>
+              <TableCell sx={styles.albumField}>{item.stock}</TableCell>
+              <TableCell sx={styles.albumField}>
                 <Box
                 component="img"
                 src={`data:image/jpeg;base64,/9j/${item.image}`} 
                 sx={{width: "50px"}}/>
               </TableCell>
-              <TableCell sx={styles.genreField}>{item.genre.description}</TableCell>
-              <TableCell sx={styles.genreField}>{item.singer.map((singer)=>(
+              <TableCell sx={styles.albumField}>{item.genre.description}</TableCell>
+              <TableCell sx={styles.albumField}>{item.singer.map((singer)=>(
                 singer.name + ","
               ))}</TableCell>
-              <TableCell sx={styles.genreActions}>
+              <TableCell sx={styles.albumActions}>
                 <Button
                   variant="contained"
                   color="error"
@@ -126,6 +125,7 @@ export const AdminAlbum:FC = () => {
                     <TextField
                       label="Fecha de lanzamiento"
                       error={Boolean(errors.release_date)}
+                      type="date"
                       name="release_date"
                       value={values.release_date}
                       onChange={handleChange}
@@ -202,6 +202,9 @@ export const AdminAlbum:FC = () => {
           </Box>
           {editIndex !== undefined && (
             <Box>
+              <Typography variant="h5" sx={styles.title}>
+                Actualizar un Album.
+              </Typography>
               <Formik
                 initialValues={initialValuesUpdate}
                 onSubmit={passToUpdate}
@@ -221,12 +224,10 @@ export const AdminAlbum:FC = () => {
                       <TextField
                         label="Fecha de lanzamiento"
                         error={Boolean(errors.release_date)}
-                        name="releaseDate"
+                        type="date"
+                        name="release_date"
                         value={values.release_date}
                         onChange={handleChange}
-                        type="date"
-                        defaultValue="2000-01-01"
-                        sx={{ width: 220 }}
                       />
                       <TextField
                         label="Precio"
@@ -254,30 +255,37 @@ export const AdminAlbum:FC = () => {
                         onChange={handleChange}
                         helperText={errors.image}
                       />
-                      {/* {genres !== undefined ? 
-                          <Select
+                      {genres !== undefined ? 
+                          <TextField
                             label="Genero"
-                            name="genre"
-                            value={`${values.genre ? values.genre : " " }`}
+                            name="genreID"
+                            select
+                            error={Boolean(errors.genreID)}
+                            value={values.genreID}
                             onChange={handleChange}
                           >
                           {genres?.map((genre, index)=>(
-                              <MenuItem key={`${genre.id}-${index}`} value={genre.id} id={genre.id}>{genre.description}</MenuItem>
+                            <MenuItem key={`${genre.id}-${index}`} value={JSON.stringify(genre)}>{genre.description}</MenuItem>
                           ))}
-                        </Select>
-                      : null} */}
-                      {/* {singers !== undefined ? 
+                        </TextField>
+                      : null}
+                      {errors.genreID && <div className="input-feedback">{errors.genreID}</div>}
+                      {singers !== undefined ? 
                         <Select
                           label="Cantante"
+                          name="singerID"
                           multiple
-                          value={values.singer ? values.singer : [" "]}
+                          error={Boolean(errors.singerID)}
+                          value={values.singerID}
                           onChange={handleChange}
                         >
+                          <MenuItem key={``} value={``}>Ninguno</MenuItem>
                           {singers?.map((singer, index)=>(
-                            <MenuItem key={`${singer.id}-${index}`} value={singer.id} id={singer.id}>{singer.name}</MenuItem>
+                            <MenuItem key={`${singer.id}-${index}`} value={JSON.stringify(singer)} id={singer.id}>{singer.name}</MenuItem>
                           ))}
                         </Select>
-                      : null} */}
+                      : null}
+                      {errors.singerID && <div className="input-feedback">{errors.singerID}</div>}
                       <Button
                         sx={styles.formButton}
                         variant="contained"

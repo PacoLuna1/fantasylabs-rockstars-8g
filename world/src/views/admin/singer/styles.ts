@@ -12,6 +12,7 @@ export const styles: Styles = {
     display: "flex",
     gap: "60px",
     padding: "40px 0",
+    flexWrap: "wrap"
   },
   singerId: {
     fontSize: "1.1rem",
@@ -27,7 +28,9 @@ export const styles: Styles = {
   },
   formGroup: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
+    width: "50%",
+    justifyContent: "space-evenly"
   },
   formContainer: {
     padding: "20px",

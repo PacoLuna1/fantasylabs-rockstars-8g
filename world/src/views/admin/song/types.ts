@@ -1,33 +1,59 @@
 import { Album } from '../../../models/album'
 import { Singer } from '../../../models/singer';
 
-export interface getByIDSongDTO{
-  _id: string;
+export interface GetByIDSongDTO{
+  id: string;
 }
 
-export interface createSongDTO{
+export interface CreateSongDTO{
   name: string;
-  release_date: Date;
+  release_date: string;
   duration?: string;
   complete_file: string;
   preview_file: string;
   price?: number;
-  album?: Album;
-  singer: Singer;
+  album?: Album[];
+  singer: Singer[];
 }
 
-export interface updateSongDTO{
-  _id: string;
+export interface CreateSongFormik{
   name: string;
-  release_date: Date;
+  release_date: string;
   duration?: string;
   complete_file: string;
   preview_file: string;
   price?: number;
-  album?: Album;
-  singer: Singer;
+  albumID: [string];
+  singerID: [string];
 }
 
-export interface deleteSongDTO{
-  _id: string;
+export interface UpdateSongDTO{
+  name: string;
+  release_date: string;
+  duration?: string;
+  complete_file: string;
+  preview_file: string;
+  price?: number;
+  album?: Album[];
+  singer: Singer[];
+}
+
+export interface UpdateSongFormik{
+  name: string;
+  release_date: string;
+  duration?: string;
+  complete_file: string;
+  preview_file: string;
+  price?: number;
+  albumID: [string];
+  singerID: [string];
+}
+
+export interface DeleteSongDTO{
+  id: string;
+}
+
+export interface SongPosition {
+  id: string;
+  index: number;
 }
