@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { store } from "../../../app/store";
 import { createAlbum, updateAlbum } from "../../../services/album";
-import { AlbumPosition, UpdateAlbumDTO, CreateAlbumDTO ,CreateAlbumFormik, UpdateAlbumFormik } from "./types";
+import { AlbumPosition, CreateAlbumDTO ,CreateAlbumFormik, UpdateAlbumFormik } from "./types";
 
 export const validationSchemaCreate: Yup.SchemaOf<CreateAlbumFormik> = Yup.object({
   name: Yup.string()

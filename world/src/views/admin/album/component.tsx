@@ -25,7 +25,7 @@ import {
   fillUpdateAlbum,
 } from "./form";
 
-import { UpdateAlbumDTO, UpdateAlbumFormik } from "./types" 
+import { UpdateAlbumFormik } from "./types" 
 import { albumSelector, genreSelector, singerSelector } from "../../../feature/labSlice";
 import { AppDispatch } from "../../../app/store";
 import { getGenres } from "../../../services/genre";
@@ -55,11 +55,11 @@ export const AdminAlbum:FC = () => {
   };
 
   return (
-    <Box sx={styles.fullGenreContainer}>
+    <Box sx={styles.fullAlbumContainer}>
       <Typography variant="h2" sx={styles.title}>
         Administrador de albums.
       </Typography>{" "}
-      <Box sx={styles.genreContainer}>
+      <Box sx={styles.albumContainer}>
         <TableCRUD
           rowsPerPageOptions={[5, 10, 15]}
           data={albums}
@@ -67,22 +67,22 @@ export const AdminAlbum:FC = () => {
           title="Albums"
           row={(item, index) => (
             <TableRow key={`${item.id}-${index}`}>
-              <TableCell sx={styles.genreId}>{item.id}</TableCell>
-              <TableCell sx={styles.genreField}>{item.name}</TableCell>
-              <TableCell sx={styles.genreField}>{item.release_date?.toString()}</TableCell>
-              <TableCell sx={styles.genreField}>{item.price}</TableCell>
-              <TableCell sx={styles.genreField}>{item.stock}</TableCell>
-              <TableCell sx={styles.genreField}>
+              <TableCell sx={styles.albumId}>{item.id}</TableCell>
+              <TableCell sx={styles.albumField}>{item.name}</TableCell>
+              <TableCell sx={styles.albumField}>{item.release_date?.toString()}</TableCell>
+              <TableCell sx={styles.albumField}>{item.price}</TableCell>
+              <TableCell sx={styles.albumField}>{item.stock}</TableCell>
+              <TableCell sx={styles.albumField}>
                 <Box
                 component="img"
                 src={`data:image/jpeg;base64,/9j/${item.image}`} 
                 sx={{width: "50px"}}/>
               </TableCell>
-              <TableCell sx={styles.genreField}>{item.genre.description}</TableCell>
-              <TableCell sx={styles.genreField}>{item.singer.map((singer)=>(
+              <TableCell sx={styles.albumField}>{item.genre.description}</TableCell>
+              <TableCell sx={styles.albumField}>{item.singer.map((singer)=>(
                 singer.name + ","
               ))}</TableCell>
-              <TableCell sx={styles.genreActions}>
+              <TableCell sx={styles.albumActions}>
                 <Button
                   variant="contained"
                   color="error"

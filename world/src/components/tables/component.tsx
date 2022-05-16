@@ -39,6 +39,7 @@ const TableCRUD = <T extends object>({
       padding: "24px",
       minWidth: "200px",
       width: "100%",
+      maxWidth: "1550px"
     },
   };
 

@@ -1,8 +1,10 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import labReducer from '../feature/labSlice'
+import authReducer from '../feature/authSlice'
 import loaderReducer from '../feature/loaderSlice'
 
 export const rootReducer = combineReducers({
+    auth: authReducer,
     lab: labReducer,
     loader: loaderReducer
 });

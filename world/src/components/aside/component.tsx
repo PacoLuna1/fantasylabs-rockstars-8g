@@ -17,6 +17,7 @@ import MusicNoteOutlinedIcon from '@mui/icons-material/MusicNoteOutlined';
 import AlbumOutlinedIcon from '@mui/icons-material/AlbumOutlined';
 import MicExternalOnIcon from '@mui/icons-material/MicExternalOn';
 import { styles } from "./styles";
+import { useNavigate } from 'react-router-dom';
 
 
 const drawerWidth = 170;
@@ -73,6 +74,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export const Aside =()=> {
   const [open, setOpen] = React.useState(false);
 
+  const navigate = useNavigate();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -81,6 +84,9 @@ export const Aside =()=> {
     setOpen(false);
   };
 
+  const changePage = (text: string) =>{
+    text === "Home"? navigate(`/`) : navigate(`/admin${text.slice(0, -1)}`);
+  }
 
 
   return (
@@ -95,7 +101,7 @@ export const Aside =()=> {
         <Divider />
         <List>
           {['Home', 'Albums', 'Singers', 'Songs' ].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem key={text} onClick={() => changePage(text)} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
