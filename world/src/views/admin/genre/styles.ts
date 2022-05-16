@@ -38,6 +38,7 @@ export const styles: Styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    width: "450px"
   },
   formButton: {
     margin: "20px 0",
